@@ -103,7 +103,7 @@ const uploadFile = async (id: string) => {
   const formData = new FormData()
 
   for (let i = 0; i < files.value.length; i++) {
-    const file = files.value.item(i)
+    const file = files.value[i]
     if (file) {
       formData.append('files', file)
     }
