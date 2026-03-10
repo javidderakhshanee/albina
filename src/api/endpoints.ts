@@ -25,9 +25,14 @@ export const API_ENDPOINTS = {
   TEAM_POST: '/team/:id',
 
   GLOBAL_DATA: '/globalData',
-  COMMON_QUESTIONS: '/global/cq',
+  COMMON_QUESTIONS: '/globalData/cq',
+  CONTACT_SUPPLIERS_REQUEST: '/globalData/contact-suppliers',
+  CONTACT_CAREER_REQUEST: '/globalData/contact-career',
+  CONTACT_INVESTMENT_REQUEST: '/globalData/contact-investment',
+  CONTACT_SUBCONTRACTOR_REQUEST: '/globalData/contact-subcontractor',
+  CONTACT_UPLOADER_REQUEST: '/globalData/contact-uploader',
 
   CAREER_LIST: 'careers',
   CAREER_POST: 'careers/:id',
-  CAREER_CATEGORY: 'careers/categories'
+  CAREER_CATEGORY: 'careers/categories',
 }

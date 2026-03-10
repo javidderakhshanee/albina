@@ -49,6 +49,10 @@ export interface SocialModel {
   urlNumber: string
   icon: string
 }
+export interface ContactRequestResponse {
+  successed: Boolean
+  id: string
+}
 
 export interface CommonQuestionResponse {
   commonQuestions: CommonQuestion[]

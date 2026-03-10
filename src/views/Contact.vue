@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { API_ENDPOINTS } from '@/api/endpoints'
 import Breadcrumber from '@/components/Breadcrumber.vue'
 
 import { useGlobalData } from '@/composables/useGlobalData'
@@ -8,9 +9,18 @@ import type {
   ContactCareerForm,
   ContactInvestmentForm,
 } from '@/types/GlobalData'
+import axios from 'axios'
 import { onMounted, ref } from 'vue'
 
-const { fetchGlobalData, loadingGlobalData, globalData } = useGlobalData()
+const {
+  fetchGlobalData,
+  loadingGlobalData,
+  globalData,
+  postContactCareerRequest,
+  postContactInvestmentRequest,
+  postContactSubcontractorRequest,
+  postContactSuppliersRequest,
+} = useGlobalData()
 
 onMounted(async () => {
   await fetchGlobalData()
@@ -63,22 +73,45 @@ const contactInvestmentForm = ref<ContactInvestmentForm>({
   additionalNotes: null,
   attachments: [],
 })
-
-const submitSupplier = () => {
-  // Handle supplier form submission logic here
+const files = ref<FileList>()
+const submitSupplier = async () => {
   console.log('Supplier Form Data:', contactSupplierForm.value)
+  const id = await postContactSuppliersRequest(contactSupplierForm.value)
+  await uploadFile(id)
 }
-const submitSubcontractor = () => {
-  // Handle subcontractor form submission logic here
+const submitSubcontractor = async () => {
   console.log('Subcontractor Form Data:', contactSubcontractorForm.value)
+  const id = await postContactSubcontractorRequest(contactSubcontractorForm.value)
+  await uploadFile(id)
 }
-const submitCareer = () => {
-  // Handle career form submission logic here
+const submitCareer = async () => {
   console.log('Career Form Data:', contactCareerForm.value)
+  const id = await postContactCareerRequest(contactCareerForm.value)
+  await uploadFile(id)
 }
-const submitInvestment = () => {
-  // Handle investment form submission logic here
+const submitInvestment = async () => {
   console.log('Investment Form Data:', contactInvestmentForm.value)
+  const id = await postContactInvestmentRequest(contactInvestmentForm.value)
+  await uploadFile(id)
+}
+function onFilesSelected(event: Event) {
+  const target = event.target as HTMLInputElement
+  files.value = target.files
+}
+const uploadFile = async (id: string) => {
+  const formData = new FormData()
+  for (let i = 0; i < files.value.length; i++) {
+    formData.append('files', files.value[i])
+  }
+
+  formData.append('id', id)
+  formData.append('title', selectedTab.value)
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL || '185.172.213.56:16820'
+
+  await fetch(`${BASE_URL}${API_ENDPOINTS.CONTACT_UPLOADER_REQUEST}`, {
+    method: 'POST',
+    body: formData,
+  })
 }
 </script>
 
@@ -197,7 +230,12 @@ const submitInvestment = () => {
                 </div>
                 <div class="col-sm-6">
                   <div class="form-input">
-                    <input type="text" name="TypeOfSuppliedMaterials" required />
+                    <input
+                      type="text"
+                      v-model="contactSupplierForm.typeOfSuppliedMaterials"
+                      name="TypeOfSuppliedMaterials"
+                      required
+                    />
                     <label class="cf-label"
                       >Type of Supplied Materials / Services <span>*</span></label
                     >
@@ -253,6 +291,7 @@ const submitInvestment = () => {
                         multiple
                         accept=".pdf,.doc,.docx,.jpg,.png"
                         name="documents"
+                        @change="onFilesSelected"
                       />
                     </label>
                     <p class="file-upload-hint">
@@ -407,6 +446,7 @@ const submitInvestment = () => {
                         multiple
                         accept=".pdf,.doc,.docx,.jpg,.png"
                         name="documents"
+                        @change="onFilesSelected"
                       />
                     </label>
                     <p class="file-upload-hint">
@@ -518,7 +558,13 @@ const submitInvestment = () => {
                         />
                       </svg>
                       <span>Upload Your CV / Resume</span>
-                      <input type="file" accept=".pdf,.doc,.docx" required name="documents" />
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        required
+                        name="documents"
+                        @change="onFilesSelected"
+                      />
                     </label>
                     <p class="file-upload-hint">Accepted: PDF, DOC, DOCX (Max 5MB)</p>
                   </div>
@@ -630,6 +676,7 @@ const submitInvestment = () => {
                         multiple
                         accept=".pdf,.doc,.docx,.jpg,.png"
                         name="documents"
+                        @change="onFilesSelected"
                       />
                     </label>
                     <p class="file-upload-hint">

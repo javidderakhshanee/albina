@@ -1,11 +1,19 @@
 import { ref } from 'vue'
 import { globalService } from '@/api/services/globalData'
-import type { GlobalDataResponse, CommonQuestionResponse } from '@/types/GlobalData'
+import type {
+  GlobalDataResponse,
+  CommonQuestionResponse,
+  ContactSupplierForm,
+  ContactSubcontractorForm,
+  ContactInvestmentForm,
+  ContactCareerForm,
+} from '@/types/GlobalData'
 
 const globalData = ref<GlobalDataResponse | null>(null)
 const commonQuestions = ref<CommonQuestionResponse | null>(null)
 const loadingGlobalData = ref(false)
 const loadingCommonQuestions = ref(false)
+const loadingPostingData = ref(false)
 const error = ref<string | null>(null)
 export function useGlobalData() {
   const fetchGlobalData = async () => {
@@ -20,7 +28,6 @@ export function useGlobalData() {
       loadingGlobalData.value = false
     }
   }
-
   const fetchCommonQuestions = async () => {
     loadingCommonQuestions.value = true
     error.value = null
@@ -33,6 +40,59 @@ export function useGlobalData() {
       loadingCommonQuestions.value = false
     }
   }
+
+  const postContactSuppliersRequest = async (request: ContactSupplierForm) => {
+    loadingPostingData.value = true
+    error.value = null
+    try {
+      const response = await globalService.postContactSuppliersRequest(request)
+      if (!response.success) throw null
+      return response.data.id
+    } catch (err: any) {
+      error.value = err.message || 'Failed to posting data'
+    } finally {
+      loadingPostingData.value = false
+    }
+  }
+  const postContactSubcontractorRequest = async (request: ContactSubcontractorForm) => {
+    loadingPostingData.value = true
+    error.value = null
+    try {
+      const response = await globalService.postContactSubcontractorRequest(request)
+      if (!response.success) throw null
+      return response.data.id
+    } catch (err: any) {
+      error.value = err.message || 'Failed to posting data'
+    } finally {
+      loadingPostingData.value = false
+    }
+  }
+  const postContactInvestmentRequest = async (request: ContactInvestmentForm) => {
+    loadingPostingData.value = true
+    error.value = null
+    try {
+      const response = await globalService.postContactInvestmentRequest(request)
+      if (!response.success) throw null
+      return response.data.id
+    } catch (err: any) {
+      error.value = err.message || 'Failed to posting data'
+    } finally {
+      loadingPostingData.value = false
+    }
+  }
+  const postContactCareerRequest = async (request: ContactCareerForm) => {
+    loadingPostingData.value = true
+    error.value = null
+    try {
+      const response = await globalService.postContactCareerRequest(request)
+      if (!response.success) throw null
+      return response.data.id
+    } catch (err: any) {
+      error.value = err.message || 'Failed to posting data'
+    } finally {
+      loadingPostingData.value = false
+    }
+  }
   return {
     globalData,
     commonQuestions,
@@ -41,5 +101,9 @@ export function useGlobalData() {
     error,
     fetchGlobalData,
     fetchCommonQuestions,
+    postContactSuppliersRequest,
+    postContactCareerRequest,
+    postContactInvestmentRequest,
+    postContactSubcontractorRequest,
   }
 }
