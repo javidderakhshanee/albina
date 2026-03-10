@@ -99,10 +99,14 @@ function onFilesSelected(event: Event) {
   files.value = target.files
 }
 const uploadFile = async (id: string) => {
+  if (!files.value) return // ✅ important
   const formData = new FormData()
-  if (files === null) return
+
   for (let i = 0; i < files.value.length; i++) {
-    formData.append('files', files.value[i])
+    const file = files.value.item(i)
+    if (file) {
+      formData.append('files', file)
+    }
   }
 
   formData.append('id', id)
