@@ -73,26 +73,26 @@ const contactInvestmentForm = ref<ContactInvestmentForm>({
   additionalNotes: null,
   attachments: [],
 })
-const files = ref<FileList>()
+const files = ref<FileList | null>(null)
 const submitSupplier = async () => {
   console.log('Supplier Form Data:', contactSupplierForm.value)
   const id = await postContactSuppliersRequest(contactSupplierForm.value)
-  await uploadFile(id)
+  await uploadFile(id || '')
 }
 const submitSubcontractor = async () => {
   console.log('Subcontractor Form Data:', contactSubcontractorForm.value)
   const id = await postContactSubcontractorRequest(contactSubcontractorForm.value)
-  await uploadFile(id)
+  await uploadFile(id || '')
 }
 const submitCareer = async () => {
   console.log('Career Form Data:', contactCareerForm.value)
   const id = await postContactCareerRequest(contactCareerForm.value)
-  await uploadFile(id)
+  await uploadFile(id || '')
 }
 const submitInvestment = async () => {
   console.log('Investment Form Data:', contactInvestmentForm.value)
   const id = await postContactInvestmentRequest(contactInvestmentForm.value)
-  await uploadFile(id)
+  await uploadFile(id || '')
 }
 function onFilesSelected(event: Event) {
   const target = event.target as HTMLInputElement
@@ -100,6 +100,7 @@ function onFilesSelected(event: Event) {
 }
 const uploadFile = async (id: string) => {
   const formData = new FormData()
+  if (files === null) return
   for (let i = 0; i < files.value.length; i++) {
     formData.append('files', files.value[i])
   }
