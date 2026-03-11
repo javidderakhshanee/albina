@@ -2,12 +2,12 @@
 import { useGlobalData } from '@/composables/useGlobalData'
 import { useServices } from '@/composables/useServices'
 import { onMounted } from 'vue'
-
-const { fetchGlobalData, loadingGlobalData, globalData } = useGlobalData()
+import { useLocale } from '@/composables/useLocales'
+const { t } = useLocale()
+const { loadingGlobalData, globalData } = useGlobalData()
 const { fetchServicesList, loadingServicesList, serviceListData } = useServices()
 
 onMounted(async () => {
-  await fetchGlobalData()
   await fetchServicesList()
 })
 </script>
@@ -63,15 +63,29 @@ onMounted(async () => {
               <h5 class="title">Resources</h5>
               <ul>
                 <li>
-                  <RouterLink to="/Projects">Projects</RouterLink>
+                  <RouterLink to="/Projects">{{ t('mainMenu.projects') }}</RouterLink>
                 </li>
-                <li><RouterLink to="/Team">Team</RouterLink></li>
-                <li><RouterLink to="/News">News</RouterLink></li>
-                <li><RouterLink to="/Partners">Partners</RouterLink></li>
-                <li><RouterLink to="/About">About Us</RouterLink></li>
-                <li><RouterLink to="/Contact">Contact us</RouterLink></li>
-                <li><RouterLink to="/History">History</RouterLink></li>
-                <li><RouterLink to="/Careers">Careers</RouterLink></li>
+                <li>
+                  <RouterLink to="/Team">{{ t('mainMenu.team') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/News">{{ t('mainMenu.news') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/Partners">{{ t('mainMenu.partners') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/About">{{ t('mainMenu.about') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/Contact">{{ t('mainMenu.contact') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/History">{{ t('mainMenu.history') }}</RouterLink>
+                </li>
+                <li>
+                  <RouterLink to="/Careers">{{ t('mainMenu.careers') }}</RouterLink>
+                </li>
               </ul>
             </div>
           </div>
@@ -116,8 +130,12 @@ onMounted(async () => {
               </div>
               <div class="copyright-menu">
                 <ul>
-                  <li><RouterLink to="/PrivacyAndPolicy">Privacy Policy</RouterLink></li>
-                  <li><RouterLink to="/TermsAndConditions">Terms & Condition</RouterLink></li>
+                  <li>
+                    <RouterLink to="/PrivacyAndPolicy">{{ t('mainMenu.privacy') }}</RouterLink>
+                  </li>
+                  <li>
+                    <RouterLink to="/TermsAndConditions">{{ t('mainMenu.terms') }}</RouterLink>
+                  </li>
                 </ul>
               </div>
             </div>

@@ -8,10 +8,13 @@ import type {
   ContactInvestmentForm,
   ContactCareerForm,
 } from '@/types/GlobalData'
+import type { LocaleInfo } from '@/locals'
 
 const globalData = ref<GlobalDataResponse | null>(null)
 const commonQuestions = ref<CommonQuestionResponse | null>(null)
 const loadingGlobalData = ref(false)
+const supportedLocales = ref<LocaleInfo[] | null>(null)
+const loadingSupportLangs = ref(false)
 const loadingCommonQuestions = ref(false)
 const loadingPostingData = ref(false)
 const error = ref<string | null>(null)
@@ -22,6 +25,19 @@ export function useGlobalData() {
     try {
       const response = await globalService.getGlobalData()
       globalData.value = response.data
+    } catch (err: any) {
+      error.value = err.message || 'Failed to fetch global data'
+    } finally {
+      loadingGlobalData.value = false
+    }
+  }
+
+  const fetchSupportLocales = async () => {
+    loadingSupportLangs.value = true
+    error.value = null
+    try {
+      const response = await globalService.getSupportLocales()
+      supportedLocales.value = response.data
     } catch (err: any) {
       error.value = err.message || 'Failed to fetch global data'
     } finally {
@@ -98,12 +114,15 @@ export function useGlobalData() {
     commonQuestions,
     loadingGlobalData,
     loadingCommonQuestions,
+    supportedLocales,
     error,
     fetchGlobalData,
     fetchCommonQuestions,
+    fetchSupportLocales,
     postContactSuppliersRequest,
     postContactCareerRequest,
     postContactInvestmentRequest,
     postContactSubcontractorRequest,
+    useGlobalData,
   }
 }

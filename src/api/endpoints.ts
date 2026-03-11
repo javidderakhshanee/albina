@@ -25,6 +25,7 @@ export const API_ENDPOINTS = {
   TEAM_POST: '/team/:id',
 
   GLOBAL_DATA: '/globalData',
+  SUPPORT_LOCALES: '/globalData/support-locales',
   COMMON_QUESTIONS: '/globalData/cq',
   CONTACT_SUPPLIERS_REQUEST: '/globalData/contact-suppliers',
   CONTACT_CAREER_REQUEST: '/globalData/contact-career',

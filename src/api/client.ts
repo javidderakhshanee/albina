@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { getErrorMessage, getMsgTranslation } from '@/utils/errorMessages'
+import type { LocaleInfo } from '@/locals'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '185.172.213.56:16820'
 
@@ -36,12 +37,11 @@ apiClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`
     }
 
-    // اضافه کردن زبان و کارنسی به headers
-    const locale = localStorage.getItem('app-locale') || 'en'
-    const currency = localStorage.getItem('chap-currency') || 'IRT'
+    const local_inf =
+      localStorage.getItem('app-locale') ||
+      JSON.stringify({ code: 'en', dir: 'ltr', name: 'EN', nativeName: 'EN' } as LocaleInfo)
 
-    config.headers['Accept-Language'] = locale
-    config.headers['X-Currency'] = currency
+    config.headers['Accept-Language'] = (JSON.parse(local_inf) as LocaleInfo).code
 
     return config
   },
@@ -103,7 +103,7 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true
       isRefreshing = true
 
-      const refreshToken = localStorage.getItem('chap-refresh-token')
+      const refreshToken = localStorage.getItem('albina-refresh-token')
 
       if (!refreshToken) {
         handleLogout()

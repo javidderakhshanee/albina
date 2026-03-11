@@ -1,5 +1,6 @@
 // src/router/index.ts
 
+import { usePageLoader } from '@/composables/usePageLoader'
 import { createRouter, createWebHistory } from 'vue-router'
 // Lazy loading (best practice for performance)
 const Home = () => import('@/views/Home.vue')
@@ -159,4 +160,16 @@ const router = createRouter({
   ],
 })
 
+const { loading } = usePageLoader()
+
+router.beforeEach((to, from, next) => {
+  loading.value = true
+  next()
+})
+
+router.afterEach(() => {
+  setTimeout(() => {
+    loading.value = false
+  }, 500)
+})
 export default router

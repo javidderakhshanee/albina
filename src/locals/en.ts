@@ -1,4 +1,19 @@
 const en = {
+  mainMenu: {
+    home: 'Home',
+    projects: 'Projects',
+    team: 'Team',
+    news: 'News',
+    services: 'Services',
+    partners: 'Partners',
+    about: 'About Us',
+    careers: 'Careers',
+    history: 'Company History',
+    inHouse: 'In House',
+    privacy: 'Privacy and Policy',
+    terms: 'Terms and Conditions',
+    contact: 'Contact',
+  },
   welcome: 'Welcome to AlBina',
   description:
     'AlBina is a powerful and user-friendly accounting software designed to simplify your financial management. With AlBina, you can easily track your income and expenses, generate invoices, manage your accounts, and gain valuable insights into your financial health. Whether you are a small business owner, freelancer, or an individual looking to stay organized, AlBina has got you covered. Experience the convenience and efficiency of AlBina today and take control of your finances like never before.',

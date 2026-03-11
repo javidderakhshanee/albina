@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useGlobalData } from '@/composables/useGlobalData'
+import { useLocale } from '@/composables/useLocales'
 import { RouterLink } from 'vue-router'
+const { t, locale, isRTL, changeLocale } = useLocale()
+const { supportedLocales } = useGlobalData()
 </script>
 <template>
   <!-- start: Header Area -->
@@ -14,46 +18,63 @@ import { RouterLink } from 'vue-router'
                 ><img src="/images/logos/logo-2.png" alt=""
               /></RouterLink>
             </div>
-
+            <ul class="langs">
+              <li
+                v-for="lang in supportedLocales"
+                :key="lang.code"
+                @click="changeLocale(lang)"
+                :class="lang.code === locale ? 'active' : ''"
+              >
+                {{ lang.nativeName }}
+              </li>
+            </ul>
             <!-- navigation -->
             <div class="menu-area d-none d-lg-inline-flex align-items-center">
               <nav id="mobile-menu" class="mainmenu">
                 <ul>
                   <li class="current-menu-ancestor">
-                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/">{{ t('mainMenu.home') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Projects">Projects</RouterLink>
+                    <RouterLink to="/Projects">{{ t('mainMenu.projects') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Team">Team</RouterLink>
+                    <RouterLink to="/Team">{{ t('mainMenu.team') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/News">News</RouterLink>
+                    <RouterLink to="/News">{{ t('mainMenu.news') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Services">Services</RouterLink>
+                    <RouterLink to="/Services">{{ t('mainMenu.services') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Partners">Partners</RouterLink>
+                    <RouterLink to="/Partners">{{ t('mainMenu.partners') }}</RouterLink>
                   </li>
                   <li class="has-dropdown">
-                    <RouterLink to="/About">About Us</RouterLink>
+                    <RouterLink to="/About">{{ t('mainMenu.about') }}</RouterLink>
                     <ul class="sub-menu">
-                      <li><RouterLink to="/About">About Us</RouterLink></li>
-                      <li><RouterLink to="/History">Company History</RouterLink></li>
-                    </ul>
-                  </li>
-                  <li class="has-dropdown">
-                    <a>In House</a>
-                    <ul class="sub-menu">
-                      <li><RouterLink to="/PrivacyAndPolicy">Privacy and Policy</RouterLink></li>
                       <li>
-                        <RouterLink to="/TermsAndConditions">Terms and Conditions</RouterLink>
+                        <RouterLink to="/About">{{ t('mainMenu.about') }}</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/History">{{ t('mainMenu.history') }}</RouterLink>
                       </li>
                     </ul>
                   </li>
-                  <li><RouterLink to="/Contact">Contact</RouterLink></li>
+                  <li class="has-dropdown">
+                    <a>{{ t('mainMenu.inHouse') }}</a>
+                    <ul class="sub-menu">
+                      <li>
+                        <RouterLink to="/PrivacyAndPolicy">{{ t('mainMenu.privacy') }}</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/TermsAndConditions">{{ t('mainMenu.terms') }}</RouterLink>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <RouterLink to="/Contact">{{ t('mainMenu.contact') }}</RouterLink>
+                  </li>
                 </ul>
               </nav>
             </div>
@@ -144,3 +165,27 @@ import { RouterLink } from 'vue-router'
   </header>
   <!-- end: Header Area -->
 </template>
+<style scoped>
+.langs {
+  padding: 1px;
+}
+
+.langs li {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #777;
+}
+
+.langs li:hover {
+  color: black;
+  text-decoration: underline;
+}
+.langs li.active {
+  color: black;
+  font-weight: 500;
+  text-decoration: underline;
+}
+</style>

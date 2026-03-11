@@ -5,12 +5,11 @@ import { useProjects } from '@/composables/useProjects'
 import { onMounted } from 'vue'
 import { useHead } from '@vueuse/head'
 
-const { fetchGlobalData, loadingGlobalData, globalData } = useGlobalData()
+const { loadingGlobalData, globalData } = useGlobalData()
 const { fetchNewsList, loadingNewsList, newsListData } = useNews()
 const { fetchProjectsList, loadingProjectsList, projectsListData } = useProjects()
 
 onMounted(async () => {
-  await fetchGlobalData()
   await fetchNewsList({
     currentPage: 1,
     pageSize: 6,

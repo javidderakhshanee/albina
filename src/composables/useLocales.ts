@@ -1,7 +1,9 @@
-import { computed, watch, onMounted } from 'vue'
+import { computed, watch, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRtl, useLocale as useVuetifyLocale } from 'vuetify'
-import { type Locale, isRTLLocale, localesInfo } from '@/locals'
+import { type Locale, type LocaleInfo } from '@/locals'
+import { useGlobalData } from '@/composables/useGlobalData'
+const { supportedLocales } = useGlobalData()
 
 export function useLocale() {
   const { locale, t } = useI18n()
@@ -9,34 +11,28 @@ export function useLocale() {
   const { isRtl: vuetifyRtl } = useRtl()
 
   const vuetifyLocale = useVuetifyLocale()
+  const defaultLang = { code: 'en', dir: 'ltr', name: 'EN', nativeName: 'EN' } as LocaleInfo
+  const selectedLocale = ref<LocaleInfo | null>(null)
+  const currentLocale = computed<Locale>(() => selectedLocale.value?.code as Locale)
+  const isRTL = computed<boolean>(() => selectedLocale.value?.dir === 'rtl')
 
-  const currentLocale = computed<Locale>(() => locale.value as Locale)
-  const isRTL = computed<boolean>(() => isRTLLocale(currentLocale.value))
-
-  const currentLocaleInfo = computed(() => {
-    return localesInfo.find((l) => l.code === currentLocale.value)
-  })
-
-  const changeLocale = (lang: Locale): void => {
-    locale.value = lang
-    localStorage.setItem('app-locale', lang)
-    updateDirection(lang)
+  const changeLocale = (ll: LocaleInfo): void => {
+    selectedLocale.value = ll
+    locale.value = ll.code
+    localStorage.setItem('app-locale', JSON.stringify(ll))
+    updateDirection(ll)
     document.location.reload()
   }
 
-  const updateDirection = (lang: Locale): void => {
-    const dir = isRTLLocale(lang) ? 'rtl' : 'ltr'
-    const isRtl = isRTLLocale(lang)
-
-    document.dir = dir
-    document.documentElement.lang = lang
-    document.documentElement.setAttribute('dir', dir)
-
+  const updateDirection = (ll: LocaleInfo): void => {
+    document.dir = ll.dir
+    document.documentElement.lang = ll.code
+    document.documentElement.setAttribute('dir', ll.dir)
+    const isRtl = ll.dir === 'rtl'
     vuetifyRtl.value = isRtl
+    vuetifyLocale.current.value = ll.code
 
-    vuetifyLocale.current.value = lang
-
-    document.body.style.direction = dir
+    document.body.style.direction = ll.dir
 
     const vApp = document.querySelector('.v-application')
     if (vApp) {
@@ -49,23 +45,25 @@ export function useLocale() {
   }
 
   watch(
-    currentLocale,
+    selectedLocale,
     (newLocale) => {
-      updateDirection(newLocale)
+      updateDirection(selectedLocale.value || defaultLang)
     },
     { immediate: true },
   )
 
   onMounted(() => {
-    updateDirection(currentLocale.value)
+    const local_inf = localStorage.getItem('app-locale') || JSON.stringify(defaultLang)
+    const ll = JSON.parse(local_inf) as LocaleInfo
+    locale.value = ll.code
+    selectedLocale.value = ll
+    updateDirection(selectedLocale.value)
   })
 
   return {
     t,
     locale: currentLocale,
     isRTL,
-    currentLocaleInfo,
-    availableLocales: localesInfo,
-    changeLocale
+    changeLocale,
   }
 }

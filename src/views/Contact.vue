@@ -13,7 +13,6 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue'
 
 const {
-  fetchGlobalData,
   loadingGlobalData,
   globalData,
   postContactCareerRequest,
@@ -22,9 +21,7 @@ const {
   postContactSuppliersRequest,
 } = useGlobalData()
 
-onMounted(async () => {
-  await fetchGlobalData()
-})
+onMounted(async () => {})
 
 const contactFormTabs = ['Suppliers', 'Subcontractors', 'Careers', 'Investment']
 const selectedTab = ref('Suppliers')

@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useLocale } from '@/composables/useLocales'
 import { RouterLink } from 'vue-router'
+const { t } = useLocale()
 </script>
 <template>
   <!-- start: Header Area -->
@@ -20,19 +22,19 @@ import { RouterLink } from 'vue-router'
               <nav class="mainmenu">
                 <ul>
                   <li class="current-menu-ancestor">
-                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/">{{ t('mainMenu.home') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Projects">Projects</RouterLink>
+                    <RouterLink to="/Projects">{{ t('mainMenu.projects') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/Team">Team</RouterLink>
+                    <RouterLink to="/Team">{{ t('mainMenu.team') }}</RouterLink>
                   </li>
                   <li>
-                    <RouterLink to="/News">News</RouterLink>
+                    <RouterLink to="/News">{{ t('mainMenu.news') }}</RouterLink>
                   </li>
                   <li class="has-dropdown">
-                    <RouterLink to="/Services">Services</RouterLink>
+                    <RouterLink to="/Services">{{ t('mainMenu.services') }}</RouterLink>
                     <ul class="sub-menu mega-menu-service">
                       <li>
                         <RouterLink to="/ServiceDetails" class="mega-menu-service-single">
@@ -73,25 +75,33 @@ import { RouterLink } from 'vue-router'
                     </ul>
                   </li>
                   <li>
-                    <RouterLink to="/Partners">Partners</RouterLink>
+                    <RouterLink to="/Partners">{{ t('mainMenu.partners') }}</RouterLink>
                   </li>
                   <li class="has-dropdown">
-                    <RouterLink to="/About">About Us</RouterLink>
+                    <RouterLink to="/About">{{ t('mainMenu.about') }}</RouterLink>
                     <ul class="sub-menu">
-                      <li><RouterLink to="/About">About Us</RouterLink></li>
-                      <li><RouterLink to="/History">Company History</RouterLink></li>
-                    </ul>
-                  </li>
-                  <li class="has-dropdown">
-                    <a>In House</a>
-                    <ul class="sub-menu">
-                      <li><RouterLink to="/PrivacyAndPolicy">Privacy and Policy</RouterLink></li>
                       <li>
-                        <RouterLink to="/TermsAndConditions">Terms and Conditions</RouterLink>
+                        <RouterLink to="/About">{{ t('mainMenu.about') }}</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/History">{{ t('mainMenu.history') }}</RouterLink>
                       </li>
                     </ul>
                   </li>
-                  <li><RouterLink to="/Contact">Contact</RouterLink></li>
+                  <li class="has-dropdown">
+                    <a>{{ t('mainMenu.inHouse') }}</a>
+                    <ul class="sub-menu">
+                      <li>
+                        <RouterLink to="/PrivacyAndPolicy">{{ t('mainMenu.privacy') }}</RouterLink>
+                      </li>
+                      <li>
+                        <RouterLink to="/TermsAndConditions">{{ t('mainMenu.terms') }}</RouterLink>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <RouterLink to="/Contact">{{ t('mainMenu.contact') }}</RouterLink>
+                  </li>
                 </ul>
               </nav>
             </div>

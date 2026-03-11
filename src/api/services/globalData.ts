@@ -1,3 +1,4 @@
+import type { LocaleInfo } from '@/locals'
 import apiClient from '../client'
 import { API_ENDPOINTS } from '../endpoints'
 import type { ApiResponse } from '@/types/api'
@@ -17,7 +18,11 @@ export const globalService = {
 
     return response.data
   },
+  async getSupportLocales(): Promise<ApiResponse<LocaleInfo[]>> {
+    const response = await apiClient.get<ApiResponse<LocaleInfo[]>>(API_ENDPOINTS.SUPPORT_LOCALES)
 
+    return response.data
+  },
   async getCommonQuestions(): Promise<ApiResponse<CommonQuestionResponse>> {
     const response = await apiClient.get<ApiResponse<CommonQuestionResponse>>(
       API_ENDPOINTS.COMMON_QUESTIONS,

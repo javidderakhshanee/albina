@@ -8,11 +8,15 @@ import AppFooter from './components/Layout/AppFooter.vue'
 import { useHead } from '@vueuse/head'
 import { useGlobalData } from '@/composables/useGlobalData'
 import { onMounted } from 'vue'
+import SplashScreen from '@/components/SplashScreen.vue'
+import { usePageLoader } from '@/composables/usePageLoader'
 
-const { fetchGlobalData, globalData } = useGlobalData()
+const { loading } = usePageLoader()
+const { fetchGlobalData, fetchSupportLocales, globalData, loadingGlobalData } = useGlobalData()
 
 onMounted(async () => {
   await fetchGlobalData()
+  await fetchSupportLocales()
   useHead({
     title: globalData.value?.meta.title,
     meta: [
@@ -51,6 +55,10 @@ onMounted(async () => {
 
 <template>
   <v-app>
+    <transition name="fade">
+      <SplashScreen v-if="loadingGlobalData || loading" />
+    </transition>
+
     <SearchPopup />
 
     <Offconvas />

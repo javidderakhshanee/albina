@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'rudawregular2';
+  src: url('../fonts/rudaw/rudawregular2.eot'); /* IE9 Compat Modes */
+  src:
+    url('../fonts/rudaw/rudawregular2.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../fonts/rudaw/rudawregular2.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('../fonts/rudaw/rudawregular2.woff') format('woff'); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'rudawregular2';
+  src: url('../fonts/rudaw/rudawbold.eot'); /* IE9 Compat Modes */
+  src:
+    url('../fonts/rudaw/rudawbold.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../fonts/rudaw/rudawbold.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('../fonts/rudaw/rudawbold.woff') format('woff'); /* Modern Browsers */
+  font-weight: 500;
+  font-style: bold;
+}

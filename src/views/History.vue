@@ -4,11 +4,9 @@ import Breadcrumber from '@/components/Breadcrumber.vue'
 import { useGlobalData } from '@/composables/useGlobalData'
 import { onMounted } from 'vue'
 
-const { fetchGlobalData, loadingGlobalData, globalData } = useGlobalData()
+const { loadingGlobalData, globalData } = useGlobalData()
 
-onMounted(async () => {
-  await fetchGlobalData()
-})
+onMounted(async () => {})
 </script>
 
 <template>

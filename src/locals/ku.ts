@@ -1,4 +1,19 @@
-const krd = {
+const ku = {
+  mainMenu: {
+    home: 'سەرەکی',
+    projects: 'پرۆژەکان',
+    team: 'تیم',
+    news: 'هەواڵەکان',
+    careers: 'پیشەکان',
+    services: 'خزمەتگوزارییەکان',
+    partners: 'هاوبەشەکان',
+    about: 'دەربارەی ئێمە',
+    history: 'مێژووی کۆمپانیا',
+    inHouse: 'ناوخۆیی',
+    privacy: 'سیاسەتی نهێنی',
+    terms: 'مەرج و یاساکان',
+    contact: 'پەیوەندی',
+  },
   welcome: 'Welcome to AlBina',
   description:
     'AlBina is a powerful and user-friendly accounting software designed to simplify your financial management. With AlBina, you can easily track your income and expenses, generate invoices, manage your accounts, and gain valuable insights into your financial health. Whether you are a small business owner, freelancer, or an individual looking to stay organized, AlBina has got you covered. Experience the convenience and efficiency of AlBina today and take control of your finances like never before.',
@@ -70,4 +85,4 @@ const krd = {
   },
 }
 
-export default krd
+export default ku
